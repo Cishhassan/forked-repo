@@ -1,0 +1,27 @@
+name: CI Workflow  # Name of the workflow
+
+on:
+  push:
+    branches: [main, develop]  # Run when code is pushed to main or develop
+  pull_request:
+    branches: [main, develop]  # Run when a PR is created
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest  # Runner environment
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3  # Fetch the code
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "pnpm"  # Change to npm or yarn if needed
+
+      - name: Install dependencies
+        run: pnpm install  # Change to npm install or yarn install if using npm/yarn
+
+      - name: Run tests
+        run: pnpm test  # Change to npm test or yarn test
